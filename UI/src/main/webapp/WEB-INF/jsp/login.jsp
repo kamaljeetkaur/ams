@@ -2,23 +2,27 @@
 <%@ page import="java.lang.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html>
 		<head>
-			<title>Login Page</title>
+		<title><fmt:message key="lbl.title.loginPage" /></title>
 		</head>
 		
 		<body>	
- 			<form action="login.htm?method=doLogin" method="POST" >	
+ 			<form:form action="login.htm?method=doLogin" method="POST" commandName="loginUserVo">	
  				<table cellsapcing="0" cellpadding="0" border="0" align="center">
  				<tr>
  					<td><label>UserName:</label></td>
- 					<td><input type='text' name='username' id='employeeCode'/></td>
+ 					<td><form:input  path="userName"/></td>
+ 					<td><form:errors  path="userName"/></td>
  				</tr>
  
 				 <tr>
  					<td><label>Password:</label></td>
- 					<td><input name="password" type="password" /></td>
+ 					<td><form:password path="password" /></td>
+ 					<td><form:errors  path="password"/></td>
  				</tr>
  	
  				<tr>
@@ -30,7 +34,7 @@
 			 	</td></tr>
  
  				</table>
-  			</form>
+  			</form:form>
  		 </body>
 </html>
 	

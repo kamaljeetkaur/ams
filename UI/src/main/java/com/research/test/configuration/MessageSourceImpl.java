@@ -17,4 +17,8 @@ public class MessageSourceImpl implements MessageSourceAware {
 		return messageSource.getMessage(msgKey, null, Locale.ENGLISH);
 	}
 	
+	public String getMessage(String msgKey, Object[] arguments)	{
+		return messageSource.getMessage(msgKey, arguments, Locale.ENGLISH);
+	}
+	
 }

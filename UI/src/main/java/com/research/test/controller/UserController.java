@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.research.test.businessservice.UserBusinessService;
 import com.research.test.entity.User;
+import com.research.test.vo.LoginUserVo;
 
 public class UserController extends MultiActionController {
 	
@@ -46,31 +47,31 @@ public class UserController extends MultiActionController {
 		this.userBusinessService = userBusinessService;
 	}
 	
-	public ModelAndView getLoginPage(HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView getLoginPage(HttpServletRequest request,HttpServletResponse response,LoginUserVo loginUserVo) {
 		System.out.println("in Login page");
-		ModelAndView view = new ModelAndView("login");
+		ModelAndView view = new ModelAndView("login","loginUserVo",loginUserVo);
 		view.addObject("msg", "Welcome To login Page");
 		return view;
 	}
 	
-	public ModelAndView doLogin(HttpServletRequest request,HttpServletResponse response) {
-		System.out.println("in doLogin()");
+	public ModelAndView doLogin(HttpServletRequest request,HttpServletResponse response,LoginUserVo loginUserVo) {
+	/*	System.out.println("in doLogin()");
 		String userName = request.getParameter("username");
-		String password = request.getParameter("password");
+		String password = request.getParameter("password");*/
 		
 		User user = new User();
-		user.setUsername(userName);
-		user.setPassword(password);
+		user.setUsername(loginUserVo.getUserName());
+		user.setPassword(loginUserVo.getPassword());
 		
-		userValidator.validate(user, errors);
+		userValidator.validate(loginUserVo, errors);
 		
 		boolean userExist = userBusinessService.userExist(user);
 		if(userExist){
 			ModelAndView view = new ModelAndView("successfullLogin");
-			view.addObject("user",userName);
+			view.addObject("user",user.getUsername());
 			return view;
 		} else {
-			ModelAndView view = new ModelAndView("login");
+			ModelAndView view = new ModelAndView("login", "loginUserVo",loginUserVo);
 			view.addObject("Error", "login Failed. Please enter username/password again");
 			return view;
 		}
